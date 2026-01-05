@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 Career Dominance Roadmap</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            color: #2c3e50;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #0066ff 0%, #00ccff 100%);
+            border-radius: 15px;
+            color: white;
+        }
+        
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+        
+        .progress-tracker {
+            display: flex;
+            justify-content: space-between;
+            margin: 40px 0;
+            position: relative;
+            padding: 20px 0;
+        }
+        
+        .progress-tracker::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #e0e0e0;
+            z-index: 0;
+        }
+        
+        .tracker-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .tracker-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: white;
+            border: 4px solid #e0e0e0;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tracker-circle:hover {
+            transform: scale(1.1);
+        }
+        
+        .tracker-circle.active {
+            background: #ff6b35;
+            border-color: #ff6b35;
+            color: white;
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.5);
+        }
+        
+        .tracker-label {
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #666;
+        }
+        
+        .tracker-circle.active + .tracker-label {
+            color: #ff6b35;
+        }
+        
+        .phase-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .phase-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+        
+        .truth-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-left: 6px solid #ff6b35;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .truth-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .truth-number {
+            display: inline-block;
+            background: #ff6b35;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 50px;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-right: 15px;
+            float: left;
+        }
+        
+        .truth-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .truth-content {
+            margin-left: 65px;
+            line-height: 1.8;
+        }
+        
+        .stat-highlight {
+            background: #0066ff;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .action-box {
+            background: #fff3cd;
+            border: 3px dashed #ff6b35;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+        
+        .action-box strong {
+            color: #ff6b35;
+            font-size: 1.2em;
+        }
+        
+        .pro-tip {
+            background: linear-gradient(135deg, #00c851 0%, #007e33 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+        
+        .pro-tip::before {
+            content: '💡 PRO-TIP: ';
+            font-size: 1.1em;
+        }
+        
+        .pitfall {
+            background: linear-gradient(135deg, #ff3547 0%, #c62828 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+        
+        .pitfall::before {
+            content: '⚠️ PITFALL: ';
+            font-size: 1.1em;
+        }
+        
+        .implementation-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        
+        .implementation-section h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+        }
+        
+        .step-list li {
+            counter-increment: step-counter;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            position: relative;
+            padding-left: 70px;
+        }
+        
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #ff6b35;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.3em;
+            line-height: 40px;
+            text-align: center;
+        }
+        
+        .game-plan {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .game-plan-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-top: 5px solid #0066ff;
+        }
+        
+        .game-plan-card h3 {
+            color: #0066ff;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+        
+        .game-plan-list {
+            list-style: none;
+            padding: 0;
+            color: #2c3e50;
+        }
+        
+        .game-plan-list li {
+            padding: 10px;
+            background: #f8f9fa;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .checklist li {
+            padding: 15px;
+            margin: 10px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+            position: relative;
+            padding-left: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #2c3e50;
+        }
+        
+        .checklist li:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+        
+        .checklist li::before {
+            content: '✅';
+            position: absolute;
+            left: 15px;
+            font-size: 1.5em;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            gap: 20px;
+        }
+        
+        .nav-button {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+        
+        .nav-button.prev {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .nav-button.next {
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+            color: white;
+        }
+        
+        .nav-button:hover:not(:disabled) {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        .nav-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+        
+        .flow-box {
+            background: white;
+            padding: 20px 30px;
+            margin: 10px 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            font-weight: 600;
+            min-width: 300px;
+            position: relative;
+        }
+        
+        .flow-box.start {
+            background: linear-gradient(135deg, #0066ff 0%, #00ccff 100%);
+            color: white;
+        }
+        
+        .flow-box.action {
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+            color: white;
+        }
+        
+        .flow-box.milestone {
+            background: linear-gradient(135deg, #00c851 0%, #007e33 100%);
+            color: white;
+        }
+        
+        .flow-arrow {
+            font-size: 2em;
+            color: #0066ff;
+            margin: 5px 0;
+        }
+        
+        .phase-title {
+            text-align: center;
+            color: #0066ff;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+        
+        .centered-content {
+            background: rgba(255,255,255,0.2);
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .centered-content h3 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+        
+        .centered-content p {
+            font-size: 1.4em;
+            line-height: 1.8;
+        }
+        
+        @media (max-width: 768px) {
+            .game-plan {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .progress-tracker {
+                flex-wrap: wrap;
+            }
+            
+            .tracker-step {
+                flex: 0 0 50%;
+                margin-bottom: 20px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .truth-content {
+                margin-left: 0;
+                margin-top: 15px;
+            }
+            
+            .truth-number {
+                float: none;
+                display: block;
+                margin: 0 auto 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 2026 Career Dominance Roadmap</h1>
+            <p>Your Interactive Training Cheat Sheet</p>
+        </div>
+        
+        <!-- Progress Tracker -->
+        <div class="progress-tracker">
+            <div class="tracker-step">
+                <div class="tracker-circle active" data-phase="1">1</div>
+                <div class="tracker-label">5 Truths</div>
+            </div>
+            <div class="tracker-step">
+                <div class="tracker-circle" data-phase="2">2</div>
+                <div class="tracker-label">Brag Book</div>
+            </div>
+            <div class="tracker-step">
+                <div class="tracker-circle" data-phase="3">3</div>
+                <div class="tracker-label">Game Plans</div>
+            </div>
+            <div class="tracker-step">
+                <div class="tracker-circle" data-phase="4">4</div>
+                <div class="tracker-label">Action Steps</div>
+            </div>
+        </div>
+        
+        <!-- Phase 1: 5 Corporate Truths -->
+        <div class="phase-section active" id="phase-1">
+            <h2 class="phase-title">📍 PHASE 1: The 5 Corporate Truths</h2>
+            
+            <div class="truth-card">
+                <div class="truth-number">1</div>
+                <div class="truth-title">The "Apply" Button Is a Lottery Ticket</div>
+                <div class="truth-content">
+                    <p><span class="stat-highlight">80% of elite roles</span> are filled via "warm" introductions BEFORE the job post hits the board.</p>
+                    <div class="action-box">
+                        <strong>ACTION:</strong> Stop clicking. Start connecting.
+                    </div>
+                    <div class="pro-tip">Build relationships BEFORE you need them</div>
+                </div>
+            </div>
+            
+            <div class="truth-card">
+                <div class="truth-number">2</div>
+                <div class="truth-title">"Years of Experience" Is a Dead Metric</div>
+                <div class="truth-content">
+                    <p>Recruiters don't care you've been there 10 years. They care you can solve a <span class="stat-highlight">$100K problem in 10 minutes</span>.</p>
+                    <div class="action-box">
+                        <strong>ACTION:</strong> Lead with IMPACT, not tenure
+                    </div>
+                    <div class="pitfall">Listing job duties instead of measurable results</div>
+                </div>
+            </div>
+            
+            <div class="truth-card">
+                <div class="truth-number">3</div>
+                <div class="truth-title">AI Is Your Co-Pilot, Not Your Replacement</div>
+                <div class="truth-content">
+                    <p>If you aren't showing how you use AI to <span class="stat-highlight">10X your output</span>, you're signaling obsolescence.</p>
+                    <div class="action-box">
+                        <strong>ACTION:</strong> Document your AI workflows
+                    </div>
+                    <div class="pro-tip">List AI tools you use on resume & LinkedIn</div>
+                </div>
+            </div>
+            
+            <div class="truth-card">
+                <div class="truth-number">4</div>
+                <div class="truth-title">"Culture" = Flexibility Premium</div>
+                <div class="truth-content">
+                    <p>Top talent trades <span class="stat-highlight">10% salary for 100% freedom</span>. Companies pay MORE for on-site roles.</p>
+                    <div class="action-box">
+                        <strong>ACTION:</strong> Decide what YOUR currency is
+                    </div>
+                    <div class="pitfall">Accepting compensation without evaluating lifestyle cost</div>
+                </div>
+            </div>
+            
+            <div class="truth-card">
+                <div class="truth-number">5</div>
+                <div class="truth-title">Loyalty Is a One-Way Street</div>
+                <div class="truth-content">
+                    <p>Your company has a 2026 budget plan. You need a <span class="stat-highlight">2026 exit plan</span>.</p>
+                    <div class="action-box">
+                        <strong>ACTION:</strong> Always be "market ready"—even if you love your job
+                    </div>
+                    <div class="pro-tip">Update resume quarterly, not when you need it</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Phase 2: Brag Book -->
+        <div class="phase-section" id="phase-2">
+            <h2 class="phase-title">📍 PHASE 2: Your Brag Book System</h2>
+            
+            <div class="implementation-section">
+                <h2>📖 START YOUR BRAG BOOK TODAY</h2>
+                <p style="text-align: center; font-size: 1.2em; margin-bottom: 30px;">
+                    In 12 months, you won't remember your wins. Start documenting NOW.
+                </p>
+                
+                <ul class="step-list">
+                    <li>
+                        <strong>Choose Your Tool:</strong><br>
+                        Open a spreadsheet, Google Doc, or even a running memo on your phone
+                    </li>
+                    <li>
+                        <strong>Set a Cadence:</strong><br>
+                        Document wins WEEKLY or MONTHLY (pick one and stick to it)
+                    </li>
+                    <li>
+                        <strong>Capture the Right Data:</strong><br>
+                        • Metrics (numbers, percentages, dollars saved/earned)<br>
+                        • Problems you solved<br>
+                        • Impact you created
+                    </li>
+                    <li>
+                        <strong>Keep It Current:</strong><br>
+                        Label it clearly, keep it open, make it a habit
+                    </li>
+                </ul>
+                
+                <div class="pro-tip">Convenience = Consistency. Use whatever tool you'll actually update!</div>
+            </div>
+        </div>
+        
+        <!-- Phase 3: Game Plans -->
+        <div class="phase-section" id="phase-3">
+            <h2 class="phase-title">📍 PHASE 3: Your Two-Pronged Game Plan</h2>
+            
+            <div class="game-plan">
+                <div class="game-plan-card">
+                    <h3>🎯 Game Plan #1: Proof of Concept Portfolio</h3>
+                    <p style="margin-bottom: 20px; line-height: 1.8;">
+                        Stop asking for permission. Show you can do the job BEFORE you apply.
+                    </p>
+                    
+                    <ul class="step-list" style="color: #2c3e50;">
+                        <li>Identify your target role</li>
+                        <li>Create 2-3 deliverables that prove capability</li>
+                        <li>Build samples, case studies, or mock projects</li>
+                        <li>Share strategically with decision-makers</li>
+                    </ul>
+                    
+                    <div class="pro-tip" style="margin-top: 20px;">Portfolios eliminate hiring risk and accelerate decisions</div>
+                </div>
+                
+                <div class="game-plan-card">
+                    <h3>💼 Game Plan #2: Portfolio Career</h3>
+                    <p style="margin-bottom: 20px; line-height: 1.8;">
+                        The ultimate 2026 flex: Diversify your income. Stop betting on one W-2.
+                    </p>
+                    
+                    <p style="font-size: 1.3em; font-weight: bold; color: #ff6b35; margin: 20px 0;">
+                        THE FORMULA:
+                    </p>
+                    
+                    <p style="margin-bottom: 20px;">
+                        Take <span class="stat-highlight">1 SKILL</span> → Sell to <span class="stat-highlight">3 CLIENTS</span>
+                    </p>
+                    
+                    <ul class="game-plan-list">
+                        <li>✓ Consulting</li>
+                        <li>✓ Advisory work</li>
+                        <li>✓ Project-based contracts</li>
+                    </ul>
+                    
+                    <div class="pro-tip" style="margin-top: 20px;">Resilience = 3 bosses instead of 1</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Phase 4: Process Flowchart -->
+        <div class="phase-section" id="phase-4">
+            <h2 class="phase-title">📍 PHASE 4: Your 2026 Implementation Roadmap</h2>
+            
+            <div class="flowchart">
+                <div class="flow-box start">
+                    🎯 START: You're Here Now (January 2026)
+                </div>
+                <div class="flow-arrow">↓</div>
+                
+                <div class="flow-box action">
+                    Week 1: Set Up Brag Book
+                </div>
+                <div class="flow-arrow">↓</div>
+                
+                <div class="flow-box action">
+                    Ongoing: Document Wins Weekly
+                </div>
+                <div class="flow-arrow">↓</div>
+                
+                <div class="flow-box action">
+                    Month 1: Audit Your Network (Who do you know? Who do you need to know?)
+                </div>
+                <div class="flow-arrow">↓</div>
+                
+                <div class="flow-box action">
+                    Month 2: Start Building Proof-of-Concept Portfolio
+                </div>
+                <div class="flow-arrow">↓</div>
+                
+                <div class="flow-box action">
+                    Month 3: Identify 1 Skill for Portfolio Career
+                </div>
+                <div class="flow-arrow">↓</div>
+                
+                <div class="flow-box action">
+                    Months 4-6: Secure First Side Client
+                </div>
+                <div class="flow-arrow">↓</div>
+                
+                <div class="flow-box action">
+                    Quarterly: Update Resume & LinkedIn with AI Tools
+                </div>
+                <div class="flow-arrow">↓</div>
+                
+                <div class="flow-box action">
+                    Months 7-12: Scale to 3 Income Sources
+                </div>
+                <div class="flow-arrow">↓</div>
+                
+                <div class="flow-box milestone">
+                    🏆 MILESTONE: Performance Review Ready with Brag Book
+                </div>
+                <div class="flow-arrow">↓</div>
+                
+                <div class="flow-box milestone">
+                    🎉 END GOAL: Market-Ready, Multi-Income, High-Impact Professional
+                </div>
+            </div>
+            
+            <div class="implementation-section">
+                <h2>✅ YOUR 2026 CAREER WINNER CHECKLIST</h2>
+                <ul class="checklist">
+                    <li>Networks strategically (not randomly)</li>
+                    <li>Leads with impact (not tenure)</li>
+                    <li>Leverages AI visibly</li>
+                    <li>Stays market-ready always</li>
+                    <li>Documents everything weekly</li>
+                    <li>Builds proof-of-concept portfolio</li>
+                    <li>Creates 3 income streams</li>
+                </ul>
+                
+                <div class="centered-content">
+                    <h3>🔥 YOUR MOVE</h3>
+                    <p>
+                        Which truth will you act on FIRST?<br>
+                        Which phase are you starting TODAY?
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Navigation Buttons -->
+        <div class="nav-buttons">
+            <button class="nav-button prev" id="prevBtn">← Previous</button>
+            <button class="nav-button next" id="nextBtn">Next →</button>
+        </div>
+    </div>
+    
+    <script>
+        // Pure JavaScript - No dependencies
+        var currentPhase = 1;
+        var totalPhases = 4;
+        
+        function changePhase(direction) {
+            var newPhase = currentPhase + direction;
+            
+            // Validate phase boundaries
+            if (newPhase < 1 || newPhase > totalPhases) {
+                return;
+            }
+            
+            // Hide current phase
+            var currentSection = document.getElementById('phase-' + currentPhase);
+            var currentCircle = document.querySelector('[data-phase="' + currentPhase + '"]');
+            
+            if (currentSection) {
+                currentSection.classList.remove('active');
+            }
+            if (currentCircle) {
+                currentCircle.classList.remove('active');
+            }
+            
+            // Update current phase
+            currentPhase = newPhase;
+            
+            // Show new phase
+            var newSection = document.getElementById('phase-' + currentPhase);
+            var newCircle = document.querySelector('[data-phase="' + currentPhase + '"]');
+            
+            if (newSection) {
+                newSection.classList.add('active');
+            }
+            if (newCircle) {
+                newCircle.classList.add('active');
+            }
+            
+            // Update button states
+            var prevBtn = document.getElementById('prevBtn');
+            var nextBtn = document.getElementById('nextBtn');
+            
+            if (prevBtn) {
+                prevBtn.disabled = (currentPhase === 1);
+            }
+            if (nextBtn) {
+                nextBtn.disabled = (currentPhase === totalPhases);
+            }
+            
+            // Scroll to top smoothly
+            window.scrollTo({ 
+                top: 0, 
+                behavior: 'smooth' 
+            });
+        }
+        
+        function goToPhase(targetPhase) {
+            var direction = targetPhase - currentPhase;
+            var steps = Math.abs(direction);
+            var step = direction > 0 ? 1 : -1;
+            
+            for (var i = 0; i < steps; i++) {
+                changePhase(step);
+            }
+        }
+        
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            // Set up navigation buttons
+            var prevBtn = document.getElementById('prevBtn');
+            var nextBtn = document.getElementById('nextBtn');
+            
+            if (prevBtn) {
+                prevBtn.disabled = true;
+                prevBtn.addEventListener('click', function() {
+                    changePhase(-1);
+                });
+            }
+            
+            if (nextBtn) {
+                nextBtn.addEventListener('click', function() {
+                    changePhase(1);
+                });
+            }
+            
+            // Set up tracker circle clicks
+            var circles = document.querySelectorAll('.tracker-circle');
+            for (var i = 0; i < circles.length; i++) {
+                circles[i].addEventListener('click', function() {
+                    var targetPhase = parseInt(this.getAttribute('data-phase'));
+                    goToPhase(targetPhase);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
